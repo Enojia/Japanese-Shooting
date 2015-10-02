@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     public float speed = 5;
+    public GameObject PlayerBullet;
 
     Rigidbody2D rb2D;
 	// Use this for initialization
@@ -21,5 +22,16 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(x, y, 0).normalized; //unit direction of the mouvment;
 
         rb2D.velocity = direction * speed; //velocity = speed + direction;
-	}
+
+        StartCoroutine(Firing());
+    }
+
+    public IEnumerator Firing()
+    {
+        while(Input.GetMouseButton(0))
+        {
+            Instantiate(PlayerBullet, transform.position, transform.rotation);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
 }
