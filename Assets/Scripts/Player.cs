@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour
+public class Player : Spaceship
 {
-    public float speed = 5;
-    public GameObject PlayerBullet;
-
-    Rigidbody2D rb2D;
+    
 	// Use this for initialization
-	void Start ()
+	protected override void Start ()
     {
-        rb2D = GetComponent<Rigidbody2D>();
+        base.Start();
+        speed = 5;
+        shotDelay = 1.0f;
+
 	}
 	
 	// Update is called once per frame
@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(x, y, 0).normalized; //unit direction of the mouvment;
 
-        rb2D.velocity = direction * speed; //velocity = speed + direction;
+        Move(direction);
 
         StartCoroutine(Firing());
     }
@@ -30,8 +30,8 @@ public class Player : MonoBehaviour
     {
         while(Input.GetMouseButton(0))
         {
-            Instantiate(PlayerBullet, transform.position, transform.rotation);
-            yield return new WaitForSeconds(0.5f);
+            Shot(transform);
+            yield return new WaitForSeconds(shotDelay);
         }
     }
 }

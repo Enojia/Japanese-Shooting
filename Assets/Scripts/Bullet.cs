@@ -15,6 +15,6 @@ public class Bullet : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        rb2D.velocity = Vector3.up * speed;
+        rb2D.velocity = transform.up * speed;
 	}
 }
