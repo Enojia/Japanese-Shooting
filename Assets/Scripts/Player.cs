@@ -34,4 +34,12 @@ public class Player : Spaceship
             yield return new WaitForSeconds(shotDelay);
         }
     }
+
+    protected override void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "EnemyBullet")
+        {
+            base.OnTriggerEnter2D(other);
+        }
+    }
 }

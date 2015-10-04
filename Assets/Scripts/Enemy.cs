@@ -35,4 +35,12 @@ public class Enemy : Spaceship
         else
             yield break;
     }
+
+    protected override void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "PlayerBullet")
+        {
+            base.OnTriggerEnter2D(other);
+        }
+    }
 }
