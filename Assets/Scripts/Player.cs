@@ -3,15 +3,16 @@ using System.Collections;
 
 public class Player : Spaceship
 {
-    
+    public AudioSource FiringSound;
 	// Use this for initialization
 	protected override void Start ()
     {
         base.Start();
         speed = 5;
-        shotDelay = 1.0f;
-
-	}
+        shotDelay = 3.0f;
+        FiringSound = GetComponent<AudioSource>();
+        StartCoroutine(Firing());
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -22,15 +23,16 @@ public class Player : Spaceship
         Vector3 direction = new Vector3(x, y, 0).normalized; //unit direction of the mouvment;
 
         Move(direction);
-
-        StartCoroutine(Firing());
+        
     }
 
     public IEnumerator Firing()
     {
-        while(Input.GetMouseButton(0))
+        while(true)
         {
             Shot(transform);
+            FiringSound.Play();
+
             yield return new WaitForSeconds(shotDelay);
         }
     }
