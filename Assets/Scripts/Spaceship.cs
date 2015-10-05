@@ -22,11 +22,8 @@ public abstract class Spaceship : MonoBehaviour
         Instantiate(bullet, origin.position, origin.rotation);
     }
 
-    public void Move(Vector3 direction)
-    {
-        rb2D.velocity = direction * speed;
-    }
-	
+    protected abstract void Move(Vector3 direction);
+    
     public void Explode()
     {
         Instantiate(Explosion, transform.position, Quaternion.identity);

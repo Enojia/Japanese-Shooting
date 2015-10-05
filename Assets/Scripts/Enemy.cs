@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Enemy : Spaceship
 {
@@ -42,5 +43,10 @@ public class Enemy : Spaceship
         {
             base.OnTriggerEnter2D(other);
         }
+    }
+
+    protected override void Move(Vector3 direction)
+    {
+        rb2D.velocity = direction * speed;
     }
 }

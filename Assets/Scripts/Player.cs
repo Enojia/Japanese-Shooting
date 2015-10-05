@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Player : Spaceship
 {
@@ -44,4 +45,20 @@ public class Player : Spaceship
             base.OnTriggerEnter2D(other);
         }
     }
+
+    protected override void Move(Vector3 direction)
+    {
+        Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)); //get the lower corner
+        Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0)); // upperRight Corner
+
+        Vector3 pos = transform.position;
+
+        pos += direction * speed * Time.deltaTime;
+
+        pos.x = Mathf.Clamp(pos.x, min.x, max.x);
+        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
+
+        transform.position = pos;
+    }
+
 }
