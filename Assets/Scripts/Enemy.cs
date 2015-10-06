@@ -48,6 +48,7 @@ public class Enemy : Spaceship
             Bullet shot = other.GetComponentInParent<Bullet>();
             hp -= shot.power;
             Destroy(other.gameObject);
+            anim.SetTrigger("TakingDamage");
         }
 
         base.OnTriggerEnter2D(other);
