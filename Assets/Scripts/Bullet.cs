@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 10;
     public float lifeTime;
+    public  int power = 1;
 
     private Rigidbody2D rb2D;
 	// Use this for initialization

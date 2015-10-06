@@ -5,13 +5,17 @@ using System;
 public class Enemy : Spaceship
 {
     public bool CanShoot;
+    
+    private Animator anim;
 
 	// Use this for initialization
 	protected override void Start ()
     {
+        anim = GetComponent<Animator>();
         speed = 0.5f;
         shotDelay = 2.5f;
         base.Start();
+        hp = 10;
         Move(transform.up * -1);
         StartCoroutine(Firing());
     }
@@ -41,8 +45,12 @@ public class Enemy : Spaceship
     {
         if(other.tag == "PlayerBullet")
         {
-            base.OnTriggerEnter2D(other);
+            Bullet shot = other.GetComponentInParent<Bullet>();
+            hp -= shot.power;
+            Destroy(other.gameObject);
         }
+
+        base.OnTriggerEnter2D(other);
     }
 
     protected override void Move(Vector3 direction)

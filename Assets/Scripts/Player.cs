@@ -11,8 +11,9 @@ public class Player : Spaceship
         base.Start();
         speed = 5;
         shotDelay = 3.0f;
+        hp = 10;
         FiringSound = GetComponent<AudioSource>();
-        StartCoroutine(Firing());
+        
     }
 	
 	// Update is called once per frame
@@ -24,10 +25,15 @@ public class Player : Spaceship
         Vector3 direction = new Vector3(x, y, 0).normalized; //unit direction of the mouvment;
 
         Move(direction);
+        if(Input.GetMouseButton(0))
+        {
+            Shot(transform);
+            FiringSound.Play();
+        }
         
     }
 
-    public IEnumerator Firing()
+    /*public IEnumerator Firing()
     {
         while(true)
         {
@@ -36,14 +42,17 @@ public class Player : Spaceship
 
             yield return new WaitForSeconds(shotDelay);
         }
-    }
+    }*/
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "EnemyBullet")
         {
-            base.OnTriggerEnter2D(other);
+            Bullet shot = other.gameObject.GetComponent<Bullet>();
+            hp -= shot.power;
+            Destroy(other.gameObject);
         }
+        base.OnTriggerEnter2D(other);
     }
 
     protected override void Move(Vector3 direction)
@@ -60,5 +69,9 @@ public class Player : Spaceship
 
         transform.position = pos;
     }
-
+    
+    void OnDisable()
+    {
+        GameManager.instance.GameOver();
+    }
 }

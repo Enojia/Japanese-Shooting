@@ -9,8 +9,10 @@ public class Emitter : MonoBehaviour
 
     IEnumerator Start()
     {
-        if (Waves.Length == 0)
-            yield break;
+        while(GameManager.instance.IsPlaying() == false)
+        {
+            yield return new WaitForEndOfFrame();
+        }
 
         while(true)
         {

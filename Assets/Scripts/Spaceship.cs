@@ -9,6 +9,7 @@ public abstract class Spaceship : MonoBehaviour
     public float shotDelay;
     public GameObject bullet;
     public GameObject Explosion;
+    public int hp;
 
     protected Rigidbody2D rb2D;
 
@@ -31,10 +32,11 @@ public abstract class Spaceship : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        Destroy(other.gameObject);
-
-        Explode();
-
-        Destroy(gameObject);
+        
+        if( hp <= 0)
+        {
+            Explode();
+            Destroy(gameObject);
+        }
     }
 }
