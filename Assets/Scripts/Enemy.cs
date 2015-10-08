@@ -2,14 +2,21 @@
 using System.Collections;
 using System;
 
-public delegate void ScoreHandler(int Point);
+public class ScoreEventArgs : EventArgs
+{
+    public int ValuePoint;
+    public ScoreEventArgs(int valuePoint)
+    {
+        ValuePoint = valuePoint;
+    }
+}
 
 public class Enemy : Spaceship
 {
     public bool CanShoot;
     public int ValuePoint;
     private Animator anim;
-    public static event ScoreHandler ScoreEvent;
+    public static event EventHandler<ScoreEventArgs> ScoreEvent;
 
 	// Use this for initialization
 	protected override void Start ()
@@ -55,7 +62,13 @@ public class Enemy : Spaceship
             anim.SetTrigger("TakingDamage");
         }
 
-        base.OnTriggerEnter2D(other);
+
+        if (hp <= 0)
+        {
+            Explode();
+            OnScore(new ScoreEventArgs(ValuePoint));
+            Destroy(gameObject);
+        }
     }
 
     protected override void Move(Vector3 direction)
@@ -63,8 +76,9 @@ public class Enemy : Spaceship
         rb2D.velocity = direction * speed;
     }
 
-    void OnDisable()
+    protected virtual void OnScore(ScoreEventArgs e)
     {
-        ScoreEvent(ValuePoint);
+        if (ScoreEvent != null)
+            ScoreEvent(this,e);
     }
 }

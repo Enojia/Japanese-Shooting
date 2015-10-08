@@ -60,7 +60,13 @@ public class Player : Spaceship
             hp -= shot.power;
             Destroy(other.gameObject);
         }
-        base.OnTriggerEnter2D(other);
+
+        if (hp <= 0)
+        {
+            Explode();
+            
+            Destroy(gameObject);
+        }
     }
 
     protected override void Move(Vector3 direction)
@@ -87,9 +93,9 @@ public class Player : Spaceship
         GameManager.instance.GameOver();
     }
 
-    public void updateScore(int valuePoint)
+    public void updateScore(object sender, ScoreEventArgs e)
     {
-        ScoreNum += valuePoint;
+        ScoreNum += e.ValuePoint;
         Score.text = ScoreNum.ToString();
     }
 }

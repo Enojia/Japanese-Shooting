@@ -30,13 +30,6 @@ public abstract class Spaceship : MonoBehaviour
         Instantiate(Explosion, transform.position, Quaternion.identity);
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D other)
-    {
-        
-        if( hp <= 0)
-        {
-            Explode();
-            Destroy(gameObject);
-        }
-    }
+    protected abstract void OnTriggerEnter2D(Collider2D other);
+    
 }
