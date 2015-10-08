@@ -2,16 +2,20 @@
 using System.Collections;
 using System;
 
+public delegate void ScoreHandler(int Point);
+
 public class Enemy : Spaceship
 {
     public bool CanShoot;
-    
+    public int ValuePoint;
     private Animator anim;
+    public static event ScoreHandler ScoreEvent;
 
 	// Use this for initialization
 	protected override void Start ()
     {
         anim = GetComponent<Animator>();
+        ValuePoint = 10;
         speed = 0.5f;
         shotDelay = 2.5f;
         base.Start();
@@ -57,5 +61,10 @@ public class Enemy : Spaceship
     protected override void Move(Vector3 direction)
     {
         rb2D.velocity = direction * speed;
+    }
+
+    void OnDisable()
+    {
+        ScoreEvent(ValuePoint);
     }
 }

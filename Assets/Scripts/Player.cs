@@ -1,19 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
+
+
 
 public class Player : Spaceship
 {
     public AudioSource FiringSound;
+    public int ScoreNum;
+    public Text Score;
+
 	// Use this for initialization
 	protected override void Start ()
     {
         base.Start();
+        Score =  GameObject.Find("Score").GetComponent<Text>();
         speed = 5;
         shotDelay = 3.0f;
         hp = 10;
         FiringSound = GetComponent<AudioSource>();
-        
+        ScoreNum = 0;
+        Enemy.ScoreEvent += updateScore;
     }
 	
 	// Update is called once per frame
@@ -72,6 +80,16 @@ public class Player : Spaceship
     
     void OnDisable()
     {
+        if(ScoreNum > GameManager.instance.HighestScoreNum)
+        {
+            GameManager.instance.HighestScoreNum = ScoreNum;
+        }
         GameManager.instance.GameOver();
+    }
+
+    public void updateScore(int valuePoint)
+    {
+        ScoreNum += valuePoint;
+        Score.text = ScoreNum.ToString();
     }
 }

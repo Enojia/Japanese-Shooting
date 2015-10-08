@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject Player;
     public static GameManager instance;
+    public int HighestScoreNum;
+    public Text HighestScore;
 
     public Text TitleText;
 	// Use this for initialization
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
         else if (instance != null)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+        HighestScore = GameObject.Find("HighScore").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +34,7 @@ public class GameManager : MonoBehaviour
     {
         TitleText.enabled = false;
         Instantiate(Player, Player.transform.position, Player.transform.rotation);
+        HighestScore.text = HighestScoreNum.ToString();
     }
 
     public void GameOver()
