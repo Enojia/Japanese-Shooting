@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: 4169e4b7e72b78147ae727787fff071e
-timeCreated: 1443790052
+timeCreated: 1444400163
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Explosion: {instanceID: 0}
+  - PooledObject: {fileID: 157038, guid: ca9a3e6013f1f954dbcf0dcd59f55ad6, type: 2}
+  - FiringSound: {instanceID: 0}
+  - Score: {instanceID: 0}
+  - Health: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
