@@ -13,20 +13,12 @@ public class Bullet : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         rb2D.velocity = transform.up * speed;
-        Invoke("SetInactive", lifeTime);
+        Destroy(gameObject, lifeTime);
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        for(int i = 0; i < this.transform.childCount; i++)
-        {
-            this.transform.GetChild(i).gameObject.SetActive(true);
-        }
+        
 	}
-
-    public void SetInactive()
-    {
-        gameObject.SetActive(false);
-    }
 }

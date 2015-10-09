@@ -10,21 +10,17 @@ public class Player : Spaceship
     public AudioSource FiringSound;
     public int ScoreNum;
     public Text Score;
-    public Text Health;
 
 	// Use this for initialization
 	protected override void Start ()
     {
         base.Start();
         Score =  GameObject.Find("Score").GetComponent<Text>();
-        Health = GameObject.Find("PlayerHealth").GetComponent<Text>();
         speed = 5;
         shotDelay = 3.0f;
         hp = 10;
         FiringSound = GetComponent<AudioSource>();
         ScoreNum = 0;
-        PooledAmount = 20;
-        WillGrow = true;
         Enemy.ScoreEvent += updateScore;
     }
 	
@@ -62,14 +58,13 @@ public class Player : Spaceship
         {
             Bullet shot = other.gameObject.GetComponent<Bullet>();
             hp -= shot.power;
-            other.gameObject.SetActive(false);
-            displayPlayerHealth();
+            Destroy(other.gameObject);
         }
 
         if (hp <= 0)
         {
             Explode();
-            displayPlayerHealth();
+            
             Destroy(gameObject);
         }
     }
@@ -106,10 +101,5 @@ public class Player : Spaceship
     {
         ScoreNum += e.ValuePoint;
         Score.text = ScoreNum.ToString();
-    }
-
-    public void displayPlayerHealth()
-    {
-        Health.text = hp + " HP";
     }
 }

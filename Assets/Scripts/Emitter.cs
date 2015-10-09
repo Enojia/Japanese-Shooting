@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public class Emitter : MonoBehaviour
 {
     public GameObject[] Waves;
-    public GameObject Wave;
 
-    //private int currentWaves;
-
-    private int randomIndex;
+    private int currentWaves;
 
     IEnumerator Start()
     {
@@ -20,25 +16,21 @@ public class Emitter : MonoBehaviour
 
         while(true)
         {
-            randomIndex = Random.Range(0, Waves.Length);
+            GameObject wave = (GameObject)Instantiate(Waves[currentWaves], transform.position, Quaternion.identity);
 
-            Wave = (GameObject)Instantiate(Waves[randomIndex], transform.position, Quaternion.identity);
+            wave.transform.parent = transform;
 
-            Wave.transform.parent = transform;
-
-            while(Wave.transform.childCount != 0)
+            while(wave.transform.childCount != 0)
             {
                 yield return new WaitForEndOfFrame();
             }
 
-            
-            Destroy(Wave);
-            /*
+            Destroy(wave);
+
             if(Waves.Length <= ++currentWaves)
             {
                 currentWaves = 0;
             }
-            */
         }
     }
 }
