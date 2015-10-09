@@ -76,11 +76,15 @@ public class Player : Spaceship
 
     protected override void Move(Vector3 direction)
     {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Quaternion rot = Quaternion.LookRotation(transform.position - mousePosition, Vector3.forward);
+        transform.rotation = rot;
+        transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
+
         Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)); //get the lower corner
         Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0)); // upperRight Corner
 
         Vector3 pos = transform.position;
-
         pos += direction * speed * Time.deltaTime;
 
         pos.x = Mathf.Clamp(pos.x, min.x, max.x);
